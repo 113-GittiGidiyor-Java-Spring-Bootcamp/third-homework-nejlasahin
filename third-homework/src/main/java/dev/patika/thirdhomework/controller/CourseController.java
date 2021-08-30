@@ -1,8 +1,11 @@
 package dev.patika.thirdhomework.controller;
 
+import dev.patika.thirdhomework.Service.CourseService;
 import dev.patika.thirdhomework.dao.CourseDAO;
 import dev.patika.thirdhomework.model.Course;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,30 +16,30 @@ import java.util.Optional;
 public class CourseController {
 
     @Autowired
-    private CourseDAO courseDAO;
+    private CourseService courseService;
 
     @GetMapping("/courses")
-    public List<Course> findAll(){
-        return (List<Course>) courseDAO.findAll();
+    public ResponseEntity<List<Course>> findAllCourse(){
+        return new ResponseEntity<>(courseService.findAllCourse(), HttpStatus.OK);
     }
 
-    @GetMapping("/courses/{id}")
-    public Optional<Course> findById(@PathVariable int id){
-        return courseDAO.findById(id);
+    @GetMapping("/courses/id/{id}")
+    public ResponseEntity<Course> findCourseById(@PathVariable int id){
+        Optional<Course> resultOptional = courseService.findByCourseId(id);
+        if (resultOptional.isPresent()) {
+            return new ResponseEntity<>(resultOptional.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping("/courses")
-    public void saveCourse(@RequestBody Course course){
-        courseDAO.save(course);
+    @GetMapping("/courses/courseName/{courseName}")
+    public ResponseEntity<Course> findByCourseName(@PathVariable String courseName){
+        Optional<Course> resultOptional = courseService.findByCourseName(courseName);
+        if (resultOptional.isPresent()) {
+            return new ResponseEntity<>(resultOptional.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @PutMapping("/courses")
-    public void updateCourse(@RequestBody Course course){
-        courseDAO.save(course);
-    }
 
-    @DeleteMapping("/courses/{id}")
-    public void deleteCourse(@PathVariable int id){
-        courseDAO.deleteById(id);
-    }
 }
