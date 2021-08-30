@@ -1,7 +1,6 @@
 package dev.patika.thirdhomework.controller;
 
-import dev.patika.thirdhomework.Service.CourseService;
-import dev.patika.thirdhomework.dao.CourseDAO;
+import dev.patika.thirdhomework.service.CourseService;
 import dev.patika.thirdhomework.model.Course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package dev.patika.thirdhomework.Service;
+package dev.patika.thirdhomework.service;
 
 import dev.patika.thirdhomework.dao.CourseDAO;
 import dev.patika.thirdhomework.model.Course;
